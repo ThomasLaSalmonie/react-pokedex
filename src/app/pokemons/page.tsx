@@ -49,7 +49,7 @@ export default function Pokedex() {
 
   return (
     <div className="pokedex">
-      <h1>Pokedex</h1>
+      <h1 className='text-4xl font-bold capitalize'>Pokedex</h1>
       <InfiniteScroll
         dataLength={pokemonList.length}
         next={fetchPokemon}
