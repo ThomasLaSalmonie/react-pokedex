@@ -21,7 +21,7 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="flex min-h-screen flex-col items-center p-24">
+    <main className="flex min-h-screen flex-col items-center pt-24">
       <Link href={`/pokemons`} className="m-2">
         <div className="bg-white shadow-md rounded-lg p-4 text-center">
           <Image
@@ -35,7 +35,7 @@ export default function Home() {
         </div>
       </Link>
       Last Pokemons:
-      <div className="flex-list">
+      <div className="flex flex-wrap justify-center">
         {pokemonList.map((pokemon, index) => (
           <PokemonCard pokemon={pokemon} key={index} />
         ))}
