@@ -1,0 +1,35 @@
+
+.pokemon-detail {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+}
+
+.pokemon-info {
+  text-align: left;
+  display: inline-block;
+  margin-top: 20px;
+}
+
+.pokemon-info p {
+  font-size: 18px;
+}
+
+.pokemon-type {
+  width: 30px;
+  height: 30px;
+}
+
+.back-link {
+  display: block;
+  margin-bottom: 20px;
+  text-decoration: none;
+  color: #007bff;
+}
+
+audio{
+  margin: 0 auto;
+  display: table;
+}
