@@ -7,8 +7,13 @@ import './page.css';
 import { pokeApi } from '@/utils/pokeapi';
 import PokemonCard from '@/components/card';
 
+interface Pokemon {
+  name: string;
+  image: string;
+};
+
 export default function Pokedex() {
-  const [pokemonList, setPokemonList] = useState([]);
+  const [pokemonList, setPokemonList] = useState<Pokemon[]>([]);
   const [loading, setLoading] = useState(true);
   const [hasMore, setHasMore] = useState(true);
   const [offset, setOffset] = useState(0);
@@ -19,7 +24,7 @@ export default function Pokedex() {
       const pokemonData = await Promise.all(
         response.results.map(async (pokemon) => {
           const pokemonRecord = await pokeApi.getPokemonByName(pokemon.name);
-          return { name: pokemon.name, image: pokemonRecord.sprites.front_default };
+          return { name: pokemon.name, image: pokemonRecord.sprites?.front_default || '' };
         })
       );
       setPokemonList([...pokemonList, ...pokemonData]);

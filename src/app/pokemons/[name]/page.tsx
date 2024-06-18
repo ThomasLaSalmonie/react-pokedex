@@ -1,18 +1,27 @@
 'use client'
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import './page.css';
 import { pokeApi, evolutionApi } from '@/utils/pokeapi';
 import PokemonCard from '@/components/card';
+import { ChainLink, Pokemon } from 'pokenode-ts';
+
+interface PokemonExtended extends Pokemon {
+  cries: {
+    latest: string;
+    legacy: string;
+  }
+}
 
 export default function PokemonDetail({ params }: { params: { name: string } }) {
-  const [pokemon, setPokemon] = useState(null);
-  const [evolutionChain, setEvolutionChain] = useState([]);
+  const [pokemon, setPokemon] = useState<PokemonExtended>();
+  const [evolutionChain, setEvolutionChain] = useState<{name: string; image: string}[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const getAllRelatedPokemons = async (chainLink) => {
+  const getAllRelatedPokemons = async (chainLink: ChainLink) => {
     const species = await pokeApi.getPokemonByName(chainLink.species.name);
-    const results = [{ name: chainLink.species.name, image: species.sprites.front_default}];
+    const results = [{ name: chainLink.species.name, image: species.sprites?.front_default || ''}];
     for (const childChainLink of chainLink.evolves_to) {
       const childSpecies = await getAllRelatedPokemons(childChainLink);
       results.push(...childSpecies);
@@ -21,7 +30,7 @@ export default function PokemonDetail({ params }: { params: { name: string } }) 
   }
   const fetchPokemonDetails = async (name: string) => {
     try {
-      const response = await pokeApi.getPokemonByName(name);
+      const response = await pokeApi.getPokemonByName(name) as PokemonExtended;
       setPokemon(response);
       setLoading(false);
       const recentItems = JSON.parse(localStorage.getItem("pokemons") || "[]") as any[];
@@ -65,7 +74,7 @@ export default function PokemonDetail({ params }: { params: { name: string } }) 
       <div>
         <Link href="/pokemons" className="back-link">Back to Pokedex</Link>
         <h1 className="text-4xl font-bold capitalize">{pokemon.name}</h1>
-        <img className="w-48 h-48 mx-auto" src={pokemon.sprites.front_default} alt={pokemon.name} />
+        <Image width="200" height="200" className="mx-auto" src={pokemon.sprites?.front_default ?? ''} alt={pokemon.name} />
         <div className='audio'>
           <audio controls>
             <source src={pokemon.cries.latest} type="audio/ogg" />
@@ -76,7 +85,7 @@ export default function PokemonDetail({ params }: { params: { name: string } }) 
           <p className="text-lg"><strong>Weight:</strong> {pokemon.weight}</p>
           <p className="text-lg flex"><strong>Types:</strong>
             {pokemon.types.map(typeInfo => (
-              <img className="pokemon-type" key={typeInfo.type.name} src={`/types/${typeInfo.type.name}.svg`} />
+              <Image width="30" height="30" className="pokemon-type" key={typeInfo.type.name} src={`/types/${typeInfo.type.name}.svg`} alt="typeInfo.type.name" />
             ))}
           </p>
           <p className="text-lg"><strong>Abilities:</strong> {pokemon.abilities.map(abilityInfo => abilityInfo.ability.name).join(', ')}</p>

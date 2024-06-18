@@ -5,8 +5,13 @@ import Image from "next/image";
 import Link from "next/link";
 import PokemonCard from '@/components/card';
 
+interface Pokemon {
+  name: string;
+  image: string;
+}
+
 export default function Home() {
-  const [pokemonList, setPokemonList] = useState([]);
+  const [pokemonList, setPokemonList] = useState<Pokemon[]>([]);
 
   useEffect(() => {
     // getting stored value
