@@ -54,7 +54,7 @@ export default function Pokedex() {
         dataLength={pokemonList.length}
         next={fetchPokemon}
         hasMore={hasMore}
-        loader={<h4>Loading...</h4>}
+        loader={<button className="w-24 justify-center rounded-md bg-black px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black" onClick={() => fetchPokemon()}>Load more</button>}
         endMessage={<p style={{ textAlign: 'center' }}>All Pokémon loaded</p>}
       >
       <div className="pokemon-list">
