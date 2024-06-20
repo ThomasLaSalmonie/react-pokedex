@@ -1,10 +1,6 @@
-
-.pokemon-card-link {
+.pokemon-card {
   text-decoration: none;
   color: inherit;
-}
-
-.pokemon-card {
   display: flex;
   align-items: center;
   justify-content: center;
