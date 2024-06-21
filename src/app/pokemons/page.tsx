@@ -1,9 +1,7 @@
 'use client'
 
 import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import './page.css';
 import { pokeApi } from '@/utils/pokeapi';
 import PokemonCard from '@/components/card';
 
@@ -48,7 +46,7 @@ export default function Pokedex() {
   }
 
   return (
-    <div className="pokedex">
+    <div className="p-6 text-center">
       <h1 className='text-4xl font-bold capitalize'>Pokedex</h1>
       <InfiniteScroll
         dataLength={pokemonList.length}
@@ -57,7 +55,7 @@ export default function Pokedex() {
         loader={<button className="w-24 justify-center rounded-md bg-black px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black" onClick={() => fetchPokemon()}>Load more</button>}
         endMessage={<p style={{ textAlign: 'center' }}>All Pokémon loaded</p>}
       >
-      <div className="pokemon-list">
+      <div className="flex flex-wrap justify-center">
         {pokemonList.map((pokemon, index) => (
           <PokemonCard pokemon={pokemon} key={index} />
         ))}
